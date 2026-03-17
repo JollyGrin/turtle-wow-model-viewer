@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Model Viewer — Chronicle Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a1a; color: #e0d8c8; font-family: monospace; display: flex; height: 100vh; }
+    #viewer { flex: 1; }
+    #controls {
+      width: 280px; padding: 12px; background: rgba(0,0,0,0.5);
+      display: flex; flex-direction: column; gap: 8px; overflow-y: auto;
+    }
+    select, input, button {
+      background: #2a2a2a; color: #e0d8c8; border: 1px solid #444;
+      padding: 6px 8px; font-family: monospace; font-size: 12px; cursor: pointer;
+    }
+    label { font-size: 11px; color: #999; }
+    .slot-row { display: flex; align-items: center; gap: 4px; }
+    .slot-label { min-width: 60px; font-size: 11px; }
+    .slot-name { font-size: 11px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .status { font-size: 10px; color: #777; min-height: 14px; }
+    h3 { font-size: 12px; color: #c8b888; border-bottom: 1px solid #444; padding-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <div id="controls">
+    <label>Race</label>
+    <select id="race-select"></select>
+    <label>Gender</label>
+    <select id="gender-select">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <label>Animation</label>
+    <select id="anim-select"></select>
+    <hr style="border-color:#333"/>
+    <h3>Equipment (Chronicle API)</h3>
+    <div style="display:flex;gap:4px;">
+      <input id="item-input" type="text" placeholder="Item ID (e.g. 19019)" style="flex:1"/>
+      <button id="equip-btn">Equip</button>
+    </div>
+    <div id="status" class="status"></div>
+    <div id="slots"></div>
+    <button id="clear-btn">Clear All</button>
+  </div>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>

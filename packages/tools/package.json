@@ -1,0 +1,15 @@
+{
+  "name": "@anthropic-grins/wow-model-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "bun run scripts/setup-from-client.ts",
+    "build-assets": "bun run scripts/build-assets.ts",
+    "upload": "bun run scripts/upload-to-r2.ts"
+  },
+  "dependencies": {
+    "@wowserhq/format": "^0.28.0",
+    "@wowserhq/stormjs": "^0.4.1"
+  }
+}

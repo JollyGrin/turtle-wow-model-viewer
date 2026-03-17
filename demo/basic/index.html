@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Model Viewer — Basic Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a1a; color: #e0d8c8; font-family: monospace; display: flex; height: 100vh; }
+    #viewer { flex: 1; }
+    #controls {
+      width: 240px; padding: 12px; background: rgba(0,0,0,0.5);
+      display: flex; flex-direction: column; gap: 8px; overflow-y: auto;
+    }
+    select, button {
+      background: #2a2a2a; color: #e0d8c8; border: 1px solid #444;
+      padding: 6px 8px; font-family: monospace; font-size: 12px; cursor: pointer;
+    }
+    label { font-size: 11px; color: #999; }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <div id="controls">
+    <label>Race</label>
+    <select id="race-select"></select>
+    <label>Gender</label>
+    <select id="gender-select">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <label>Animation</label>
+    <select id="anim-select"></select>
+  </div>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
