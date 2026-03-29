@@ -40,18 +40,21 @@ export class ModelViewer {
   constructor(config: ModelViewerConfig) {
     this.resolver = config.assets;
 
-    // Create canvas
+    // Create canvas — sized via CSS so it never pushes the container
     this.canvas = document.createElement('canvas');
+    this.canvas.style.display = 'block';
+    this.canvas.style.width = '100%';
+    this.canvas.style.height = '100%';
     config.container.appendChild(this.canvas);
 
-    // Renderer
+    // Renderer — updateStyle=false so Three.js doesn't set inline w/h on the canvas
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
       preserveDrawingBuffer: true,
     });
     const rect = config.container.getBoundingClientRect();
-    this.renderer.setSize(rect.width, rect.height);
+    this.renderer.setSize(rect.width, rect.height, false);
     this.renderer.setClearColor(config.backgroundColor ?? 0x333333);
 
     // Scene
@@ -209,7 +212,7 @@ export class ModelViewer {
     const rect = parent.getBoundingClientRect();
     this.camera.aspect = rect.width / rect.height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(rect.width, rect.height);
+    this.renderer.setSize(rect.width, rect.height, false);
   }
 
   private animate = (): void => {
