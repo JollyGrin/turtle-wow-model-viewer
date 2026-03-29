@@ -33,7 +33,7 @@ The `public/` folder that comes out is your CDN. Upload it anywhere — GitHub P
 ## Prerequisites
 
 - **Bun** runtime ([bun.sh](https://bun.sh))
-- **WoW 1.12.x game client** — tested with [Turtle WoW](https://turtle-wow.org), also works with vanilla private servers (Kronos, etc.)
+- **WoW 1.12.x game client** — tested with [Turtle WoW](https://turtlecraft.gg), also works with vanilla private servers (Kronos, etc.)
 - ~2 GB free disk space for intermediate files, ~600 MB for the final `public/` output
 
 ### Required MPQ Files
