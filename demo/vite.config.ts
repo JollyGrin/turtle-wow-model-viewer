@@ -2,8 +2,6 @@ import { defineConfig, type Plugin } from 'vite';
 import { resolve } from 'path';
 import { existsSync } from 'fs';
 
-const CDN = 'https://models.chronicleclassic.com';
-
 /** Redirect /basic → /basic/, /chronicle → /chronicle/ so MPA pages resolve. */
 function trailingSlash(): Plugin {
   return {
@@ -25,6 +23,8 @@ function trailingSlash(): Plugin {
 export default defineConfig({
   appType: 'mpa',
   plugins: [trailingSlash()],
+  // GitHub Pages sets BASE_PATH during CI build; defaults to '/' for local dev
+  base: process.env.BASE_PATH || '/',
   build: {
     rollupOptions: {
       input: {
@@ -36,10 +36,6 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // Proxy asset requests to CDN (avoids CORS issues in dev)
-      '/models': { target: CDN, changeOrigin: true },
-      '/items': { target: CDN, changeOrigin: true },
-      '/item-textures': { target: CDN, changeOrigin: true },
       // Proxy Chronicle API for the chronicle demo
       '/chronicle-api': {
         target: 'https://chronicleclassic.com',

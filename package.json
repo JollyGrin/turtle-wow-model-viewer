@@ -3,5 +3,16 @@
   "workspaces": [
     "packages/*",
     "demo"
-  ]
+  ],
+  "scripts": {
+    "dev": "cd demo && bun run dev",
+    "build:demo": "cd demo && bun run build",
+    "build:lib": "cd packages/viewer && bun run build",
+    "typecheck": "cd packages/viewer && bun run typecheck",
+    "setup": "cd packages/tools && bun run scripts/setup-from-client.ts",
+    "extract": "cd packages/tools && bun run scripts/build-assets.ts",
+    "release:patch": "./scripts/release.sh patch",
+    "release:minor": "./scripts/release.sh minor",
+    "release:major": "./scripts/release.sh major"
+  }
 }

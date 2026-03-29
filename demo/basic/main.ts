@@ -5,10 +5,7 @@
  * (serve public/ with the Vite dev server).
  */
 import { ModelViewer, createCdnResolver } from '../../packages/viewer/src/index';
-
-// --- Configuration ---
-// Empty base = same-origin. Vite dev server proxies /models, /items, /item-textures to CDN.
-const CDN_BASE = '';
+import { CDN_BASE } from '../cdn';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
