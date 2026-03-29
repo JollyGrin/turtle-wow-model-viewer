@@ -169,7 +169,7 @@ export class ModelViewer {
 
       this.frameCameraOnModel(loaded.group);
     } catch (err) {
-      console.error(`Failed to load model ${slug}:`, err);
+      throw new Error(`Failed to load model ${slug}`, { cause: err });
     }
   }
 

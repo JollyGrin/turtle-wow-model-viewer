@@ -5,17 +5,18 @@
  * (serve public/ with the Vite dev server).
  */
 import { ModelViewer, createCdnResolver } from '../../packages/viewer/src/index';
-import { CDN_BASE } from '../cdn';
 
+// Serve models from demo/public/ — Vite's BASE_URL handles GitHub Pages prefix
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
-  assets: createCdnResolver(CDN_BASE),
+  assets: createCdnResolver(import.meta.env.BASE_URL.replace(/\/+$/, '')),
 });
 
 // --- Race / Gender dropdowns ---
 const raceSelect = document.getElementById('race-select') as HTMLSelectElement;
 const genderSelect = document.getElementById('gender-select') as HTMLSelectElement;
 const animSelect = document.getElementById('anim-select') as HTMLSelectElement;
+const errorEl = document.getElementById('error')!;
 
 for (const race of ModelViewer.getRaces()) {
   const opt = document.createElement('option');
@@ -26,7 +27,15 @@ for (const race of ModelViewer.getRaces()) {
 raceSelect.value = 'human';
 
 async function switchModel() {
-  await viewer.loadCharacter(raceSelect.value, genderSelect.value as 'male' | 'female');
+  errorEl.style.display = 'none';
+  try {
+    await viewer.loadCharacter(raceSelect.value, genderSelect.value as 'male' | 'female');
+  } catch (err) {
+    errorEl.textContent = `Failed to load ${raceSelect.value}-${genderSelect.value}`;
+    errorEl.style.display = 'block';
+    console.error(err);
+    return;
+  }
 
   // Populate animation dropdown
   animSelect.innerHTML = '';
