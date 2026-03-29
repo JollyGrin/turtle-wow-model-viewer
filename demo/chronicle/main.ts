@@ -12,6 +12,13 @@ import { ModelViewer, createCdnResolver } from '../../packages/viewer/src/index'
 import type { BodyArmor, EquipmentOptions } from '../../packages/viewer/src/index';
 import { CDN_BASE } from '../cdn';
 
+// In dev (localhost), Vite proxies /chronicle-api → chronicleclassic.com/api.
+// In production (static hosting), call the API directly.
+const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const CHRONICLE_API = isDev
+  ? '/chronicle-api/v1/internal/gamedata/display/item'
+  : 'https://chronicleclassic.com/api/v1/internal/gamedata/display/item';
+
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
   assets: createCdnResolver(CDN_BASE),
@@ -229,7 +236,7 @@ async function equipItem(itemId: number) {
   statusEl.textContent = `Loading #${itemId}...`;
   statusEl.style.color = '#aaa';
   try {
-    const res = await fetch(`/chronicle-api/v1/internal/gamedata/display/item/${itemId}`);
+    const res = await fetch(`${CHRONICLE_API}/${itemId}`);
     if (!res.ok) throw new Error(`API error ${res.status}`);
     const item: ChronicleItem = await res.json();
 
