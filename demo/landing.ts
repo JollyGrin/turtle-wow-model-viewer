@@ -12,21 +12,42 @@ if (heroContainer) {
   });
 
   const races = ModelViewer.getRaces();
-  const race = races[Math.floor(Math.random() * races.length)];
-  const gender: 'male' | 'female' = Math.random() > 0.5 ? 'male' : 'female';
+  const genders: Array<'male' | 'female'> = ['male', 'female'];
 
-  if (raceLabel) {
-    raceLabel.textContent = `${race.label}, ${gender[0].toUpperCase()}${gender.slice(1)}`;
+  // Build shuffled playlist of all race-gender combos
+  const combos = races.flatMap(r => genders.map(g => ({ race: r, gender: g })));
+  for (let i = combos.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [combos[i], combos[j]] = [combos[j], combos[i]];
   }
 
-  viewer.loadCharacter(race.slug, gender).then(() => {
-    const anims = viewer.getAnimations();
-    const dance = anims.find(a => a.label === 'EmoteDance');
-    if (dance) viewer.playAnimation(dance.seqIndex);
-  }).catch(() => {
-    if (raceLabel) raceLabel.textContent = 'Human, Male';
-    viewer.loadCharacter('human', 'male').catch(() => {});
-  });
+  let idx = 0;
+  let cycling = true;
+
+  async function showModel() {
+    const { race, gender } = combos[idx % combos.length];
+
+    if (raceLabel) {
+      raceLabel.textContent = `${race.label}, ${gender[0].toUpperCase()}${gender.slice(1)}`;
+    }
+
+    try {
+      await viewer.loadCharacter(race.slug, gender);
+      const anims = viewer.getAnimations();
+      const dance = anims.find(a => a.label === 'EmoteDance');
+      if (dance) viewer.playAnimation(dance.seqIndex);
+    } catch {
+      // skip failed models
+    }
+
+    idx++;
+    if (cycling) setTimeout(showModel, 3000);
+  }
+
+  showModel();
+
+  // Stop cycling when user interacts with the viewer
+  heroContainer.addEventListener('pointerdown', () => { cycling = false; }, { once: true });
 }
 
 // --- Tab switching ---
