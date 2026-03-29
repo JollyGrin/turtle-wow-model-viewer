@@ -1,5 +1,13 @@
 # Learnings Journal
 
+## [2026-03-29] Item texture variants — extract all color variants, not just the first match
+
+**Context:** Many WoW weapons share the same M2 mesh but have multiple BLP textures for color variants (e.g. `Sword_Long_A_01.blp`, `Sword_Long_A_01Blue.blp`, `Sword_Long_A_01Red.blp`). The old `findCompanionBlp()` function picked only the first matching BLP, so all items using the same mesh only got one texture — the wrong one in many cases.
+**Fix:** Replaced `findCompanionBlp()` (returns one path) with `findAllCompanionBlps()` (returns all BLPs whose stem starts with the weapon stem). Each variant is written as its own `.tex` file (e.g. `textures/sword-long-a-01blue.tex`). The skip-if-already-converted check was also tightened: now requires both `model.json` AND at least one `.tex` file to exist, catching partial conversions from the old single-texture approach.
+**Impact:** Items that previously displayed with the wrong texture (or a random variant) now have all color variants available. The viewer's `weaponTexture` / `offhandTexture` path can select a specific variant.
+**Origin:** Ported from Steven Masley's commit `e4ee969` on branch `item_variants` in `~/git/warcraft/model-viewer`.
+**Reference:** `packages/tools/scripts/convert-item.ts` — `findAllCompanionBlps()`, `convertWeapon()`
+
 ## [2026-03-06] Orc male helmet offset — crown bone behind head center
 
 **Context:** Orc male was the only race with a slightly offset helmet. All 19 other race/gender combos rendered correctly.
