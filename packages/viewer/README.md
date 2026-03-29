@@ -1,4 +1,4 @@
-# @jollygrin/classic-wow-model-viewer
+# classic-wow-model-viewer
 
 Web-based renderer for World of Warcraft 1.12.x (vanilla/classic) character models. Renders characters with equipment, animations, and configurable asset sources using Three.js.
 
@@ -7,13 +7,13 @@ Web-based renderer for World of Warcraft 1.12.x (vanilla/classic) character mode
 ## Install
 
 ```bash
-npm install @jollygrin/classic-wow-model-viewer three
+npm install classic-wow-model-viewer three
 ```
 
 ## Quick Start
 
 ```typescript
-import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
@@ -68,7 +68,7 @@ createCdnResolver('')
 For consumers who manage their own Three.js scene:
 
 ```typescript
-import { loadModel, loadAnimations, AnimationController } from '@jollygrin/classic-wow-model-viewer';
+import { loadModel, loadAnimations, AnimationController } from 'classic-wow-model-viewer';
 
 const model = await loadModel('/models/human-male', resolver);
 const animData = await loadAnimations('/models/human-male', resolver);
@@ -111,7 +111,7 @@ The viewer takes a DOM element and has a `dispose()` method — works with any f
 
 ```tsx
 import { useRef, useEffect } from 'react';
-import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
 
 function WowViewer({ race, gender }) {
   const ref = useRef(null);
