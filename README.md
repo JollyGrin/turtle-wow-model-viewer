@@ -52,14 +52,14 @@ This triggers two GitHub Actions:
 
 ### `packages/viewer` — npm package
 
-`@anthropic-grins/wow-model-viewer` — the rendering engine.
+`@jollygrin/classic-wow-model-viewer` — the rendering engine.
 
 ```bash
-npm install @anthropic-grins/wow-model-viewer three
+npm install @jollygrin/classic-wow-model-viewer three
 ```
 
 ```typescript
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
@@ -117,7 +117,7 @@ The viewer takes a DOM element and has a `dispose()` method — it works with an
 ### React
 ```tsx
 import { useRef, useEffect } from 'react';
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
 
 function WowViewer({ race, gender }: { race: string; gender: 'male' | 'female' }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -144,7 +144,7 @@ function WowViewer({ race, gender }: { race: string; gender: 'male' | 'female' }
 ```svelte
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+  import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
 
   let container;
   let viewer;
@@ -171,7 +171,7 @@ function WowViewer({ race, gender }: { race: string; gender: 'male' | 'female' }
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
 
 const container = ref<HTMLDivElement>();
 let viewer: ModelViewer;
@@ -191,7 +191,7 @@ onUnmounted(() => viewer?.dispose());
 ### Solid
 ```tsx
 import { onMount, onCleanup } from 'solid-js';
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from '@jollygrin/classic-wow-model-viewer';
 
 function WowViewer() {
   let container!: HTMLDivElement;
@@ -220,7 +220,7 @@ function WowViewer() {
 │  - Controls viewer via API               │
 │  - Brings own item database              │
 ├──────────────────────────────────────────┤
-│  @anthropic-grins/wow-model-viewer       │
+│  @jollygrin/classic-wow-model-viewer       │
 │  - Three.js rendering                    │
 │  - Character + equipment loading         │
 │  - Texture compositing                   │

@@ -1,6 +1,7 @@
 {
-  "name": "@anthropic-grins/wow-model-viewer",
+  "name": "@jollygrin/classic-wow-model-viewer",
   "version": "0.1.0",
+  "description": "Web-based renderer for World of Warcraft 1.12.x character models. Provides a turnkey Three.js viewer and low-level APIs for loading models, animations, and equipment.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +11,25 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "LICENSE", "README.md"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JollyGrin/turtle-wow-model-viewer"
+  },
+  "homepage": "https://jollygrin.github.io/turtle-wow-model-viewer/",
+  "keywords": [
+    "wow",
+    "world-of-warcraft",
+    "model-viewer",
+    "3d",
+    "three",
+    "threejs",
+    "vanilla-wow",
+    "classic-wow",
+    "webgl",
+    "m2"
+  ],
   "peerDependencies": {
     "three": ">=0.160.0"
   },

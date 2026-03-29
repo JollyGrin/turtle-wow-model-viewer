@@ -1,0 +1,44 @@
+MIT License
+
+Copyright (c) 2026 JollyGrin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+ASSET DISCLAIMER
+
+This software is a rendering tool only. It does not include, distribute, or
+host any game assets. All World of Warcraft game data — including but not
+limited to 3D models, textures, animations, and database files — is the
+intellectual property of Blizzard Entertainment, Inc. and is protected under
+applicable copyright and trademark laws.
+
+World of Warcraft(R) and Blizzard Entertainment(R) are trademarks or
+registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or
+other countries. This project is not affiliated with, endorsed by, or
+sponsored by Blizzard Entertainment.
+
+The extraction tools provided in this repository are intended solely for
+personal, non-commercial, educational use with game clients that users
+legally own. Users are responsible for ensuring their use of extracted game
+assets complies with Blizzard Entertainment's End User License Agreement
+and all applicable laws.
+
+No game assets are included in this npm package or source repository.
