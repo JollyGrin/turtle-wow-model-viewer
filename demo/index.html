@@ -2,10 +2,453 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0;url=./basic/" />
-  <title>WoW Model Viewer Demos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Model Viewer — 3D Character Renderer for the Web</title>
+  <meta name="description" content="Open source library for rendering World of Warcraft 1.12.x character models in the browser. React, Svelte, Vue, or vanilla JS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0c0a;
+      --surface: #16140f;
+      --elevated: #1e1b15;
+      --border: #2a2520;
+      --text: #d8ccb4;
+      --text-dim: #8a7e6a;
+      --text-muted: #504a3e;
+      --gold: #c9a84c;
+      --gold-light: #e8d08a;
+      --gold-dim: #7a6a32;
+      --code-kw: #cc7832;
+      --code-str: #6a8759;
+      --code-cm: #5c5c42;
+      --code-fn: #e8c36d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--gold-light); }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+
+    /* ---- HERO ---- */
+    .hero {
+      padding: 72px 0 56px;
+      background: linear-gradient(180deg, #0a0908 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 56px;
+      align-items: center;
+    }
+    .hero-content { animation: fadeUp 0.6s ease-out both; }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .subtitle {
+      font-size: 19px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .tagline {
+      color: var(--text-dim);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .install-cmd {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .install-cmd .prompt { color: var(--gold); margin-right: 8px; user-select: none; }
+    .demo-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .demo-link {
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .demo-link:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+    /* Hero viewer */
+    .hero-viewer-wrap {
+      animation: fadeUp 0.8s ease-out 0.15s both;
+      position: relative;
+    }
+    .hero-viewer-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+    #hero-viewer {
+      width: 100%;
+      height: 420px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .race-label {
+      display: block;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---- SECTIONS ---- */
+    section { padding: 72px 0; }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      margin-top: 40px;
+    }
+    p + p { margin-top: 12px; }
+
+    /* Dividers */
+    .divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim) 30%, var(--gold-dim) 70%, transparent);
+      max-width: 140px;
+      margin: 0 auto;
+    }
+
+    /* ---- TABS ---- */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ---- CODE BLOCKS ---- */
+    .code-block {
+      background: #0a0908;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold-dim);
+      border-radius: 0 4px 4px 0;
+      padding: 20px 24px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #b0a890;
+      transition: border-left-color 0.3s;
+      white-space: pre;
+    }
+    .code-block:hover { border-left-color: var(--gold); }
+    .tab-panel .code-block { border-radius: 0 0 4px 4px; border-top: none; }
+    .kw { color: var(--code-kw); }
+    .str { color: var(--code-str); }
+    .cm { color: var(--code-cm); font-style: italic; }
+    .fn { color: var(--code-fn); }
+
+    /* ---- HOSTING SECTION ---- */
+    .hosting-intro {
+      color: var(--text-dim);
+      font-size: 15px;
+      margin-bottom: 24px;
+      max-width: 640px;
+    }
+    .tree {
+      color: var(--text-dim);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .tree .highlight { color: var(--text); }
+    .tree .comment { color: var(--code-cm); font-style: italic; }
+
+    /* ---- FOOTER ---- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-dim); }
+    footer a:hover { color: var(--gold); }
+    .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 8px; }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .hero { padding: 48px 0 40px; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .hero-viewer-wrap { order: -1; }
+      #hero-viewer { height: 320px; }
+      h1 { font-size: 28px; }
+      .subtitle { font-size: 16px; }
+      section { padding: 48px 0; }
+      .tab-bar { overflow-x: auto; }
+      .tab-btn { padding: 8px 12px; font-size: 12px; white-space: nowrap; }
+      .code-block { font-size: 12px; padding: 16px; }
+    }
+  </style>
 </head>
 <body>
-  <p><a href="./basic/">Basic Demo</a> | <a href="./chronicle/">Chronicle Demo</a></p>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>WOW MODEL VIEWER</h1>
+        <p class="subtitle">Render 1.12.x character models on the web.</p>
+        <p class="tagline">
+          Open-source Three.js library with skeletal animation, equipment compositing,
+          and real-time playback. Framework-agnostic. CDN-agnostic. 20 race/gender combinations.
+        </p>
+        <div class="install-cmd">
+          <span class="prompt">$</span>
+          npm i @anthropic-grins/wow-model-viewer three
+        </div>
+        <nav class="demo-links">
+          <a class="demo-link" href="./basic/">Basic Demo</a>
+          <a class="demo-link" href="./chronicle/">Chronicle Demo</a>
+          <a class="demo-link" href="https://github.com/JollyGrin/turtle-wow-model-viewer" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+      <div class="hero-viewer-wrap">
+        <div id="hero-viewer"></div>
+        <span class="race-label" id="race-label"></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ QUICK START ============ -->
+    <section>
+      <div class="container">
+        <h2>QUICK START</h2>
+
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="vue">Vue</button>
+          <button class="tab-btn" data-tab="vanilla">Vanilla</button>
+        </div>
+
+        <!-- React -->
+        <div class="tab-panel active" id="tab-react"><pre class="code-block"><span class="kw">import</span> { useRef, useEffect } <span class="kw">from</span> <span class="str">'react'</span>
+<span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+
+<span class="kw">function</span> <span class="fn">CharacterViewer</span>({ race = <span class="str">'human'</span>, gender = <span class="str">'male'</span> }) {
+  <span class="kw">const</span> el = useRef(<span class="kw">null</span>)
+
+  useEffect(() =&gt; {
+    <span class="kw">const</span> viewer = <span class="kw">new</span> ModelViewer({
+      container: el.current,
+      assets: createCdnResolver(<span class="str">'https://your-cdn.com'</span>),
+    })
+    viewer.loadCharacter(race, gender)
+    <span class="kw">return</span> () =&gt; viewer.dispose()
+  }, [race, gender])
+
+  <span class="kw">return</span> &lt;div ref={el} style={{ width: <span class="str">'100%'</span>, height: 500 }} /&gt;
+}</pre></div>
+
+        <!-- Svelte -->
+        <div class="tab-panel" id="tab-svelte"><pre class="code-block">&lt;script&gt;
+  <span class="kw">import</span> { onMount, onDestroy } <span class="kw">from</span> <span class="str">'svelte'</span>
+  <span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+
+  <span class="kw">let</span> el, viewer
+
+  onMount(() =&gt; {
+    viewer = <span class="kw">new</span> ModelViewer({
+      container: el,
+      assets: createCdnResolver(<span class="str">'https://your-cdn.com'</span>),
+    })
+    viewer.loadCharacter(<span class="str">'human'</span>, <span class="str">'male'</span>)
+  })
+
+  onDestroy(() =&gt; viewer?.dispose())
+&lt;/script&gt;
+
+&lt;div bind:this={el} style=<span class="str">"width:100%;height:500px"</span> /&gt;</pre></div>
+
+        <!-- Vue -->
+        <div class="tab-panel" id="tab-vue"><pre class="code-block">&lt;script setup&gt;
+<span class="kw">import</span> { ref, onMounted, onUnmounted } <span class="kw">from</span> <span class="str">'vue'</span>
+<span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+
+<span class="kw">const</span> el = ref(<span class="kw">null</span>)
+<span class="kw">let</span> viewer
+
+onMounted(() =&gt; {
+  viewer = <span class="kw">new</span> ModelViewer({
+    container: el.value,
+    assets: createCdnResolver(<span class="str">'https://your-cdn.com'</span>),
+  })
+  viewer.loadCharacter(<span class="str">'human'</span>, <span class="str">'male'</span>)
+})
+
+onUnmounted(() =&gt; viewer?.dispose())
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div ref=<span class="str">"el"</span> style=<span class="str">"width:100%;height:500px"</span> /&gt;
+&lt;/template&gt;</pre></div>
+
+        <!-- Vanilla -->
+        <div class="tab-panel" id="tab-vanilla"><pre class="code-block"><span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+
+<span class="kw">const</span> viewer = <span class="kw">new</span> ModelViewer({
+  container: document.getElementById(<span class="str">'viewer'</span>),
+  assets: createCdnResolver(<span class="str">'https://your-cdn.com'</span>),
+})
+
+<span class="cm">// Load any of 20 race-gender combos</span>
+viewer.loadCharacter(<span class="str">'orc'</span>, <span class="str">'male'</span>)
+
+<span class="cm">// Animations: Stand, Walk, Run, Attack, Dance, ...</span>
+viewer.playAnimationByName(<span class="str">'Dance'</span>)</pre></div>
+
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ============ SELF-HOST ASSETS ============ -->
+    <section>
+      <div class="container">
+        <h2>SELF-HOST ASSETS</h2>
+        <p class="hosting-intro">
+          The viewer loads assets via a resolver &mdash; any static file host works.
+          Use the included extraction scripts to convert a WoW&nbsp;1.12.x client
+          into web-ready model files, then upload the output folder to your CDN.
+        </p>
+
+        <pre class="code-block"><span class="cm"># Clone and install the tools package</span>
+git clone https://github.com/JollyGrin/turtle-wow-model-viewer.git
+<span class="kw">cd</span> turtle-wow-model-viewer/packages/tools
+bun install
+
+<span class="cm"># Point at your WoW 1.12.x client (TurtleWoW, vanilla, etc.)</span>
+bun run setup -- ~/Games/TurtleWoW
+
+<span class="cm"># Extract and convert all assets (~10 min, outputs to public/)</span>
+bun run extract
+
+<span class="cm"># Result: public/ is ready to upload as-is</span>
+ls public/   <span class="cm"># models/  items/  item-textures/</span></pre>
+
+        <h3>CDN Folder Structure</h3>
+        <p style="color:var(--text-dim);font-size:14px;margin-bottom:16px;">
+          Point <code style="color:var(--text);background:var(--surface);padding:2px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:13px">createCdnResolver()</code>
+          at the root of this folder. The viewer resolves all paths from there.
+        </p>
+
+        <pre class="code-block tree"><span class="highlight">public/</span>
+├── <span class="highlight">models/</span>
+│   └── <span class="highlight">{race}-{gender}/</span>        <span class="comment">← 20 combos (human-male, orc-female, ...)</span>
+│       ├── model.json           <span class="comment">← mesh manifest (bones, geosets, attachments)</span>
+│       ├── model.bin            <span class="comment">← vertex + index buffers (40 B/vertex)</span>
+│       ├── anims.bin            <span class="comment">← skeletal animation keyframes</span>
+│       └── textures/
+│           ├── skin.tex         <span class="comment">← character body (uint16 w + uint16 h + RGBA)</span>
+│           └── hair.tex         <span class="comment">← hair texture</span>
+│
+├── <span class="highlight">items/</span>                       <span class="comment">← equipment models (optional)</span>
+│   ├── weapon/{slug}/
+│   │   ├── model.json / model.bin
+│   │   └── textures/{variant}.tex
+│   ├── head/{helm}/{race}-{gender}/
+│   └── shoulder/{slug}/left/ &amp; right/
+│
+└── <span class="highlight">item-textures/</span>               <span class="comment">← armor compositing layers (optional)</span>
+    └── {Region}/{name}_{M|F|U}.tex</pre>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="container">
+      <div>WoW Model Viewer &mdash; MIT License</div>
+      <nav class="footer-links">
+        <a href="./basic/">Basic Demo</a>
+        <a href="./chronicle/">Chronicle Demo</a>
+        <a href="https://github.com/JollyGrin/turtle-wow-model-viewer" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.npmjs.com/package/@anthropic-grins/wow-model-viewer" target="_blank" rel="noopener">npm</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="./landing.ts"></script>
 </body>
 </html>
