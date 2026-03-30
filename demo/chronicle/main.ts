@@ -10,7 +10,7 @@
  */
 import { ModelViewer, createCdnResolver } from '../../packages/viewer/src/index';
 import type { BodyArmor, EquipmentOptions } from '../../packages/viewer/src/index';
-import { CDN_BASE } from '../cdn';
+import { CDN } from '../cdn';
 
 // In dev (localhost), Vite proxies /chronicle-api → chronicleclassic.com/api.
 // In production (static hosting), call the API directly.
@@ -21,7 +21,7 @@ const CHRONICLE_API = isDev
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
-  assets: createCdnResolver(CDN_BASE),
+  assets: createCdnResolver(CDN.CHRONICLE),
 });
 
 // --- Chronicle API types ---
