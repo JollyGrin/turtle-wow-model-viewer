@@ -335,7 +335,7 @@ Cache-Control: public, max-age=31536000, immutable
 ## Using Your CDN
 
 ```typescript
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,

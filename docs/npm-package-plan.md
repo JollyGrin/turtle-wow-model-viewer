@@ -4,7 +4,7 @@
 
 Turn this monolithic Vite app into two cleanly separated concerns:
 
-1. **`@anthropic-grins/wow-model-viewer`** — npm package that renders WoW character models with equipment, animations, and a configurable asset source
+1. **`classic-wow-model-viewer`** — npm package that renders WoW character models with equipment, animations, and a configurable asset source
 2. **`tools/`** — CLI scripts that convert raw WoW game files into the web-ready assets the viewer consumes
 
 The `/chron` page is the reference implementation: it points the viewer at a CDN (`models.chronicleclassic.com`), fetches item metadata from the Chronicle API, and passes resolved equipment options to the viewer. The npm package generalizes this pattern so anyone can swap in their own CDN and item database.
@@ -343,7 +343,7 @@ Keyframe data (variable):
 ```
 warcraft-model-viewer/
 ├── packages/
-│   ├── viewer/                              # npm: @anthropic-grins/wow-model-viewer
+│   ├── viewer/                              # npm: classic-wow-model-viewer
 │   │   ├── src/
 │   │   │   ├── index.ts                     # Public API: ModelViewer, types, createCdnResolver
 │   │   │   ├── types.ts                     # AssetResolver, BodyArmor, LoadedModel, etc.
@@ -615,7 +615,7 @@ export class ModelViewer {
 
 **Minimal — render a character:**
 ```typescript
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
@@ -649,8 +649,8 @@ await viewer.equip({
 
 **With Chronicle API (what the /chron demo does):**
 ```typescript
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
-import type { BodyArmor } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
+import type { BodyArmor } from 'classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
@@ -692,7 +692,7 @@ const viewer = new ModelViewer({
 
 ```json
 {
-  "name": "@anthropic-grins/wow-model-viewer",
+  "name": "classic-wow-model-viewer",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
@@ -877,7 +877,7 @@ cp -r public/ /var/www/wow-assets/
 ### Step 4: Point the Viewer at Your CDN
 
 ```typescript
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,
@@ -960,7 +960,7 @@ If you need item-ID → display-ID mapping for a specific server's database, tha
 3. Test: `npm pack` → install in fresh project → renders
 4. Publish to npm
 
-**Verify:** `npm install @anthropic-grins/wow-model-viewer three` in a fresh Vite project → renders a character.
+**Verify:** `npm install classic-wow-model-viewer three` in a fresh Vite project → renders a character.
 
 ### Phase 5: Documentation
 
@@ -977,7 +977,7 @@ If you need item-ID → display-ID mapping for a specific server's database, tha
 
 ## Open Decisions
 
-1. **Package name**: `@anthropic-grins/wow-model-viewer`? `@jollygrin/wow-model-viewer`? `warcraft-model-viewer`?
+1. **Package name**: `classic-wow-model-viewer`? `@jollygrin/wow-model-viewer`? `warcraft-model-viewer`?
 
 2. **Repo strategy**: New repo (clean history, no archaeology) vs. refactor in place (preserve git history, continuous deployment)?
 

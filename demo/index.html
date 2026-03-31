@@ -273,7 +273,7 @@
         </p>
         <div class="install-cmd">
           <span class="prompt">$</span>
-          npm i @anthropic-grins/wow-model-viewer three
+          npm i classic-wow-model-viewer three
         </div>
         <nav class="demo-links">
           <a class="demo-link" href="./basic/">Basic Demo</a>
@@ -304,7 +304,7 @@
 
         <!-- React -->
         <div class="tab-panel active" id="tab-react"><pre class="code-block"><span class="kw">import</span> { useRef, useEffect } <span class="kw">from</span> <span class="str">'react'</span>
-<span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+<span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'classic-wow-model-viewer'</span>
 
 <span class="kw">function</span> <span class="fn">CharacterViewer</span>({ race = <span class="str">'human'</span>, gender = <span class="str">'male'</span> }) {
   <span class="kw">const</span> el = useRef(<span class="kw">null</span>)
@@ -324,7 +324,7 @@
         <!-- Svelte -->
         <div class="tab-panel" id="tab-svelte"><pre class="code-block">&lt;script&gt;
   <span class="kw">import</span> { onMount, onDestroy } <span class="kw">from</span> <span class="str">'svelte'</span>
-  <span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+  <span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'classic-wow-model-viewer'</span>
 
   <span class="kw">let</span> el, viewer
 
@@ -344,7 +344,7 @@
         <!-- Vue -->
         <div class="tab-panel" id="tab-vue"><pre class="code-block">&lt;script setup&gt;
 <span class="kw">import</span> { ref, onMounted, onUnmounted } <span class="kw">from</span> <span class="str">'vue'</span>
-<span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+<span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'classic-wow-model-viewer'</span>
 
 <span class="kw">const</span> el = ref(<span class="kw">null</span>)
 <span class="kw">let</span> viewer
@@ -365,7 +365,7 @@ onUnmounted(() =&gt; viewer?.dispose())
 &lt;/template&gt;</pre></div>
 
         <!-- Vanilla -->
-        <div class="tab-panel" id="tab-vanilla"><pre class="code-block"><span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'@anthropic-grins/wow-model-viewer'</span>
+        <div class="tab-panel" id="tab-vanilla"><pre class="code-block"><span class="kw">import</span> { ModelViewer, createCdnResolver } <span class="kw">from</span> <span class="str">'classic-wow-model-viewer'</span>
 
 <span class="kw">const</span> viewer = <span class="kw">new</span> ModelViewer({
   container: document.getElementById(<span class="str">'viewer'</span>),
@@ -447,7 +447,7 @@ ls public/   <span class="cm"># models/  items/  item-textures/</span></pre>
         <a href="./basic/">Basic Demo</a>
         <a href="./chronicle/">Chronicle Demo</a>
         <a href="https://github.com/JollyGrin/turtle-wow-model-viewer" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.npmjs.com/package/@anthropic-grins/wow-model-viewer" target="_blank" rel="noopener">npm</a>
+        <a href="https://www.npmjs.com/package/classic-wow-model-viewer" target="_blank" rel="noopener">npm</a>
       </nav>
     </div>
   </footer>

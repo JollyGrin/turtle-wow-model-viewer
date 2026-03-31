@@ -84,7 +84,7 @@ your-cdn.com/
 
 Point the viewer at your CDN:
 ```typescript
-import { ModelViewer, createCdnResolver } from '@anthropic-grins/wow-model-viewer';
+import { ModelViewer, createCdnResolver } from 'classic-wow-model-viewer';
 
 const viewer = new ModelViewer({
   container: document.getElementById('viewer')!,

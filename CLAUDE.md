@@ -7,7 +7,7 @@ npm package + tools for rendering WoW 1.12.x character models on the web. Extrac
 ## Repository Structure
 
 ```
-packages/viewer/     # npm package: @anthropic-grins/wow-model-viewer
+packages/viewer/     # npm package: classic-wow-model-viewer
   src/
     index.ts         # Public API exports
     types.ts         # AssetResolver, BodyArmor, EquipmentOptions, etc.
