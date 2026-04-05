@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #333333; overflow: hidden; width: 100%; height: 100vh; }
+    #viewer { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    if (typeof define !== 'undefined') window._savedDefine = define;
+    window.define = undefined;
+    window.CONTENT_PATH = '/zamimg-proxy/modelviewer/classic/';
+    window.WOTLK_TO_RETAIL_DISPLAY_ID_API = undefined;
+    window.WH = {
+      debug: function() {},
+      defaultAnimation: 'Stand',
+      WebP: { getImageExtension: function() { return '.webp'; } },
+      Wow: {
+        Item: {
+          INVENTORY_TYPE_HEAD: 1, INVENTORY_TYPE_NECK: 2,
+          INVENTORY_TYPE_SHOULDERS: 3, INVENTORY_TYPE_SHIRT: 4,
+          INVENTORY_TYPE_CHEST: 5, INVENTORY_TYPE_WAIST: 6,
+          INVENTORY_TYPE_LEGS: 7, INVENTORY_TYPE_FEET: 8,
+          INVENTORY_TYPE_WRISTS: 9, INVENTORY_TYPE_HANDS: 10,
+          INVENTORY_TYPE_FINGER: 11, INVENTORY_TYPE_TRINKET: 12,
+          INVENTORY_TYPE_ONE_HAND: 13, INVENTORY_TYPE_SHIELD: 14,
+          INVENTORY_TYPE_RANGED: 15, INVENTORY_TYPE_BACK: 16,
+          INVENTORY_TYPE_TWO_HAND: 17, INVENTORY_TYPE_BAG: 18,
+          INVENTORY_TYPE_TABARD: 19, INVENTORY_TYPE_ROBE: 20,
+          INVENTORY_TYPE_MAIN_HAND: 21, INVENTORY_TYPE_OFF_HAND: 22,
+          INVENTORY_TYPE_HELD_IN_OFF_HAND: 23, INVENTORY_TYPE_PROJECTILE: 24,
+          INVENTORY_TYPE_THROWN: 25, INVENTORY_TYPE_RANGED_RIGHT: 26,
+        },
+      },
+    };
+  </script>
+  <script src="/zamimg-proxy/modelviewer/classic/deployment/viewer/c3f890f/viewer.min.js"></script>
+  <script>
+    if (window._savedDefine) { window.define = window._savedDefine; delete window._savedDefine; }
+
+    // Parse params from URL hash: #modelId=2&items=1,1170,3,4925&distance=7&azimuth=0
+    const params = new URLSearchParams(location.hash.slice(1));
+    const modelId = parseInt(params.get('modelId') || '2', 10);
+    const zamDistance = parseFloat(params.get('distance') || '7');
+    const zamAzimuth = parseFloat(params.get('azimuth') || '0');
+    const zamZenith = parseFloat(params.get('zenith') || '0');
+    const itemPairs = (params.get('items') || '').split(',').filter(Boolean).map(Number);
+    const items = [];
+    for (let i = 0; i < itemPairs.length; i += 2) {
+      items.push([itemPairs[i], itemPairs[i + 1]]);
+    }
+
+    async function init() {
+      const viewer = await new ZamModelViewer({
+        type: 2,
+        contentPath: window.CONTENT_PATH,
+        container: jQuery('#viewer'),
+        aspect: window.innerWidth / window.innerHeight,
+        hd: false,
+        dataEnv: 'classic',
+        env: 'classic',
+        gameDataEnv: 'classic',
+        models: { id: modelId, type: 16 },
+        items: items.length > 0 ? items : undefined,
+      });
+
+      // Wait for model, then signal parent
+      const check = setInterval(() => {
+        if (viewer.renderer?.actors?.length > 0) {
+          clearInterval(check);
+          // Zero blend times
+          if (viewer.renderer) viewer.renderer.crossFadeDuration = 0;
+          const seqs = viewer.renderer?.actors?.[0]?.c?.k?.x;
+          if (Array.isArray(seqs)) {
+            for (const seq of seqs) { seq.d = 0; seq.j = 0; }
+          }
+          viewer.method?.('setAnimation', 'Stand');
+          // Set camera from params — apply repeatedly because the viewer
+          // overrides camera settings during initial model framing.
+          // Both distance and zoom.target/current control the view distance.
+          function applyCamera() {
+            viewer.renderer.distance = zamDistance;
+            viewer.renderer.azimuth = zamAzimuth;
+            viewer.renderer.zenith = zamZenith;
+            if (viewer.renderer.zoom) {
+              viewer.renderer.zoom.target = 1;
+              viewer.renderer.zoom.current = 1;
+            }
+          }
+          applyCamera();
+          setTimeout(applyCamera, 500);
+          setTimeout(applyCamera, 1000);
+          setTimeout(applyCamera, 2000);
+          setTimeout(() => {
+            applyCamera();
+            window.__ZAM_READY = true;
+            window.parent.postMessage({ type: 'zam-ready' }, '*');
+          }, 3000);
+        }
+      }, 300);
+    }
+
+    init().catch(err => {
+      window.parent.postMessage({ type: 'zam-error', error: String(err) }, '*');
+    });
+  </script>
+</body>
+</html>

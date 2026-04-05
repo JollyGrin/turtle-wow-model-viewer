@@ -22,7 +22,7 @@
       },
     },
     "packages/viewer": {
-      "name": "@anthropic-grins/wow-model-viewer",
+      "name": "classic-wow-model-viewer",
       "version": "0.1.0",
       "devDependencies": {
         "@types/three": "^0.182.0",
@@ -38,8 +38,6 @@
   },
   "packages": {
     "@anthropic-grins/wow-model-tools": ["@anthropic-grins/wow-model-tools@workspace:packages/tools"],
-
-    "@anthropic-grins/wow-model-viewer": ["@anthropic-grins/wow-model-viewer@workspace:packages/viewer"],
 
     "@babel/helper-string-parser": ["@babel/helper-string-parser@7.27.1", "", {}, "sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA=="],
 
@@ -226,6 +224,8 @@
     "balanced-match": ["balanced-match@4.0.4", "", {}, "sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA=="],
 
     "brace-expansion": ["brace-expansion@5.0.4", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg=="],
+
+    "classic-wow-model-viewer": ["classic-wow-model-viewer@workspace:packages/viewer"],
 
     "compare-versions": ["compare-versions@6.1.1", "", {}, "sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg=="],
 

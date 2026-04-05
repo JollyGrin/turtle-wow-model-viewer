@@ -1,0 +1,17 @@
+{
+  "name": "regression-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:scan": "bun run scripts/scan.ts",
+    "test:review": "bun run scripts/review.ts",
+    "test:approve": "bun run scripts/approve.ts",
+    "test:status": "bun run scripts/status.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "pixelmatch": "^6.0.0",
+    "playwright": "^1.50.0",
+    "pngjs": "^7.0.0"
+  }
+}

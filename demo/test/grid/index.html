@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regression Grid — All Races</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #111;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    #status-bar {
+      padding: 8px 16px;
+      background: #0a0a0a;
+      border-bottom: 1px solid #333;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .status-item { color: #888; }
+    .status-item span { color: #e8d08a; }
+    #load-state { margin-left: auto; }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      padding: 8px;
+    }
+
+    .cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #1a1a1a;
+      border: 1px solid #222;
+    }
+    .cell-label {
+      padding: 4px 8px;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      color: #666;
+      text-align: center;
+    }
+    .cell-label.loaded { color: #4caf50; }
+    .cell-label.error { color: #f44336; }
+    .cell-viewer {
+      width: 100%;
+      aspect-ratio: 2/3;
+      background: #333333;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="status-bar">
+    <div class="status-item">Items: <span id="s-items">none</span></div>
+    <div class="status-item">Loaded: <span id="s-loaded">0</span>/16</div>
+    <div id="load-state" style="color:#ff9800;">Loading...</div>
+  </div>
+  <div id="grid"></div>
+
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>

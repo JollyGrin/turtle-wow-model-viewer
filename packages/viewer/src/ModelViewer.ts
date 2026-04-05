@@ -125,6 +125,13 @@ export class ModelViewer {
     if (match) this.animController.setSequence(match.seqIndex);
   }
 
+  /** Set camera position and look-at target. Useful for programmatic screenshots. */
+  setCamera(position: { x: number; y: number; z: number }, target: { x: number; y: number; z: number }): void {
+    this.camera.position.set(position.x, position.y, position.z);
+    this.controls.target.set(target.x, target.y, target.z);
+    this.controls.update();
+  }
+
   /** Get the list of supported races. */
   static getRaces(): Array<{ slug: string; label: string }> {
     return [...RACES];

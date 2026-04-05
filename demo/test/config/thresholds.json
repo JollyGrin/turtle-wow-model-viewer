@@ -1,0 +1,18 @@
+{
+  "pass": 15,
+  "review": 25,
+  "perCategory": {
+    "lighting": 30,
+    "extraction": 5,
+    "rendering": 15,
+    "conversion": 10
+  },
+  "regressionGuard": {
+    "sampleCount": 10,
+    "sampleCountByRisk": {
+      "extraction": 5,
+      "conversion": 10,
+      "rendering": 15
+    }
+  }
+}

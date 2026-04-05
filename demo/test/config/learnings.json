@@ -1,0 +1,8 @@
+{
+  "entries": [],
+  "skipPatterns": [
+    { "pattern": "blood-elf-*", "reason": "TurtleWoW-only, no ZamImg reference" },
+    { "pattern": "goblin-*", "reason": "TurtleWoW-only, no ZamImg reference" }
+  ],
+  "scannedCombos": []
+}

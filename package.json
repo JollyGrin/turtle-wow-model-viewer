@@ -13,6 +13,13 @@
     "extract": "cd packages/tools && bun run scripts/build-assets.ts",
     "release:patch": "./scripts/release.sh patch",
     "release:minor": "./scripts/release.sh minor",
-    "release:major": "./scripts/release.sh major"
+    "release:major": "./scripts/release.sh major",
+
+    "test:scan": "cd demo/test && bun run scripts/scan.ts",
+    "test:review": "cd demo/test && bun run scripts/review.ts",
+    "test:approve": "cd demo/test && bun run scripts/approve.ts",
+    "test:status": "cd demo/test && bun run scripts/status.ts",
+    "test:install": "cd demo/test && bun install && npx playwright install chromium",
+    "test:setup": "./setup.sh"
   }
 }

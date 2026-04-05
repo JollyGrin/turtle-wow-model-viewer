@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regression Test — Side-by-Side Comparison</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a1a;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    #status-bar {
+      padding: 8px 16px;
+      background: #111;
+      border-bottom: 1px solid #333;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .status-item { color: #888; }
+    .status-item span { color: #e8d08a; }
+    #load-state { margin-left: auto; }
+    #load-state.ready { color: #4caf50; }
+    #load-state.loading { color: #ff9800; }
+    #load-state.error { color: #f44336; }
+
+    #comparison {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      padding: 16px;
+    }
+
+    .viewer-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .viewer-label {
+      padding: 4px 12px;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .viewer-label.reference { color: #4caf50; }
+    .viewer-label.ours { color: #2196f3; }
+
+    .viewer-container {
+      width: 400px;
+      height: 600px;
+      background: #333333;
+      border: 1px solid #444;
+      overflow: hidden;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div id="status-bar">
+    <div class="status-item">Race: <span id="s-race">—</span></div>
+    <div class="status-item">Gender: <span id="s-gender">—</span></div>
+    <div class="status-item">Items: <span id="s-items">—</span></div>
+    <div class="status-item">Angle: <span id="s-angle">—</span></div>
+    <div id="load-state" class="loading">Loading...</div>
+  </div>
+
+  <div id="comparison">
+    <div class="viewer-panel">
+      <div class="viewer-label reference">Reference (ZamImg)</div>
+      <div class="viewer-container" id="zam-container"></div>
+    </div>
+    <div class="viewer-panel">
+      <div class="viewer-label ours">Ours (local)</div>
+      <div class="viewer-container" id="our-container"></div>
+    </div>
+  </div>
+
+  <!-- ZamImg runs in an iframe to isolate its WebGL context from ours -->
+
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>

@@ -31,6 +31,9 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         basic: resolve(__dirname, 'basic/index.html'),
         chronicle: resolve(__dirname, 'chronicle/index.html'),
+        test: resolve(__dirname, 'test/index.html'),
+        'zam-frame': resolve(__dirname, 'test/zam-frame.html'),
+        grid: resolve(__dirname, 'test/grid/index.html'),
       },
     },
   },
@@ -42,6 +45,15 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/chronicle-api/, '/api'),
         cookieDomainRewrite: 'localhost',
+      },
+      // Proxy ZamImg CDN for the regression test page (model data is gated by referer)
+      '/zamimg-proxy': {
+        target: 'https://wow.zamimg.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/zamimg-proxy/, ''),
+        headers: {
+          Referer: 'https://www.wowhead.com/',
+        },
       },
     },
   },

@@ -1,19 +1,16 @@
 node_modules/
 dist/
 
-# Game data (populated by tools)
-data/**/*.MPQ
-data/**/*.m2
-data/**/*.BLP
-data/**/*.dbc
-data/**/*.zip
-data/dbc/*
-data/patch/*
+# Extracted game data (populated by `bun run setup`)
+packages/tools/data/
 
-# Generated assets (built by tools pipeline)
-public/models/
-public/items/
-public/item-textures/
+# Generated assets (populated by `bun run extract`)
+packages/tools/public/
+
+# Demo assets copied from tools (models are git-tracked, items are generated)
+demo/public/items/
+demo/public/item-textures/
+demo/public/item-catalog.json
 
 # Build artifacts
 *.tsbuildinfo

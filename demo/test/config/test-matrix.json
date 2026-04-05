@@ -1,0 +1,11 @@
+{
+  "races": ["human", "orc", "dwarf", "night-elf", "scourge", "tauren", "gnome", "troll"],
+  "genders": ["male", "female"],
+  "angles": ["front", "side"],
+  "itemSets": [
+    { "id": "naked", "label": "Base model (no gear)", "items": [] },
+    { "id": "tier1-warrior", "label": "Might Set (T1 Warrior)", "items": [16866, 16868, 16857, 16861, 16862, 16864, 16863] },
+    { "id": "ashkandi", "label": "Ashkandi 2H Sword", "items": [19364] },
+    { "id": "drillborer-disk", "label": "Drillborer Disk Shield", "items": [19019] }
+  ]
+}
